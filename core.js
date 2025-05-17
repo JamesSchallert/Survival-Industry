@@ -16,11 +16,11 @@ const GatherIntervals = {};
 
 /* Create a list of strings of resource types, then iterate over them to
  initialize objects that hold the resource amounts, gather rates, ui
- counter elements, and gather buttons, then creates click event listeners for
+ counter elements, and gather buttons, then creates event listeners for
  those gather buttons.  */
 const resource_types = [
   'water',
-]
+];
 
 
 
@@ -52,8 +52,8 @@ for (const resource_type of resource_types) {
         () => { canGather = true; }, 
         GatherRateLimit
       );
-    }
-  }
+    };
+  };
   ResourceButtons[resource_type].addEventListener("click", () => tryGather());
 
   /* Add ability to gather by holding down click or touch by setting an interval
@@ -62,11 +62,11 @@ for (const resource_type of resource_types) {
     ResourceButtons[resource_type],
     ["mousedown","touchstart"],
     () => {GatherIntervals[resource_type] = setInterval(tryGather, 50);},
-  )
+  );
   addListeners(
     ResourceButtons[resource_type],
     ["mouseup","mouseleave","touchend","touchcancel"],
     () => {clearInterval(GatherIntervals[resource_type]);},
-  )
+  );
 };
 
