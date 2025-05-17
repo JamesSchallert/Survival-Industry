@@ -10,7 +10,7 @@ function gather(resource_name) {
       `${ResourceAmounts[resource_name]}`;
 };
 
-const GatherRateLimit = 300; // milliseconds between allowed gathers
+const GatherRateLimit = 90; // milliseconds between allowed gathers
 const GatherCooldowns = {};
 const GatherIntervals = {};
 
