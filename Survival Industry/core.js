@@ -54,7 +54,7 @@ for (const resource_type of resource_types) {
       );
     }
   }
-  ResourceButtons[resource_type].addEventListener("click", tryGather());
+  ResourceButtons[resource_type].addEventListener("click", () => tryGather());
 
   /* Add ability to gather by holding down click or touch by setting an interval
     to tryGather on holding, then clearing the interval when releasing. */
