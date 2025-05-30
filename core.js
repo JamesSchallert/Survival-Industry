@@ -15,14 +15,14 @@ function gather(resource_type) {
   function is then set to occur after a certain time (GatherRateLimit)
   that sets canGather back to true.*/
 function tryGather(resource_type) {
-    if (canGather) {
-      canGather = false;
-      gather(resource_type);
-      setTimeout(
-        () => { canGather = true; }, 
-        GatherRateLimit
-      );
-    };
+  if (canGather) {
+    canGather = false;
+    gather(resource_type);
+    setTimeout(
+      () => { canGather = true; }, 
+      GatherRateLimit
+    );
+  };
 };
 
 const GatherRateLimit = 90; // milliseconds between allowed gathers
