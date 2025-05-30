@@ -37,8 +37,6 @@ const resource_types = [
   'water',
 ];
 
-
-
 const ResourceAmounts = {};
 const GatherRates = {};
 const ResourceCounters = {};
