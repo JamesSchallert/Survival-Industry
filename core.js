@@ -4,20 +4,20 @@ import { addListeners } from './utils.js';
 // A function that takes a resource name string as the argument and updates
 // that resource's value in the resource amounts object by its value in the
 // gather rates object.  It then updates the counter that the player sees.
-function gather(resource_type) {
-    ResourceAmounts[resource_type] += GatherRates[resource_type];
-    ResourceCounters[resource_type].innerText = 
-      `${ResourceAmounts[resource_type]}`;
+function gather(resourceType) {
+    ResourceAmounts[resourceType] += GatherRates[resourceType];
+    ResourceCounters[resourceType].innerText = 
+      `${ResourceAmounts[resourceType]}`;
 };
 
 /* Function to limit clicking speed.  Autoclicker software often breaks
   these games.  Before gathering, global canGather is set to false.  An arrow
   function is then set to occur after a certain time (GatherRateLimit)
   that sets canGather back to true.*/
-function tryGather(resource_type) {
+function tryGather(resourceType) {
   if (canGather) {
     canGather = false;
-    gather(resource_type);
+    gather(resourceType);
     setTimeout(
       () => { canGather = true; }, 
       GatherRateLimit
@@ -26,14 +26,14 @@ function tryGather(resource_type) {
 };
 
 const GatherRateLimit = 90; // milliseconds between allowed gathers
-let gather_interval = null;
+let gatherInterval = null;
 let canGather = true;
 
 /* Create a list of strings of resource types, then iterate over them to
  initialize objects that hold the resource amounts, gather rates, ui
  counter elements, and gather buttons, then creates event listeners for
  those gather buttons.  */
-const resource_types = [
+const resourceTypes = [
   'water',
 ];
 
@@ -42,49 +42,49 @@ const GatherRates = {};
 const ResourceCounters = {};
 const ResourceButtons = {};
 
-for (const resource_type of resource_types) {
-  ResourceAmounts[resource_type] = 0;
-  GatherRates[resource_type] = 1;
-  ResourceCounters[resource_type] = 
-    document.getElementById(`${resource_type}-counter`);
-  ResourceButtons[resource_type] = 
-    document.getElementById(`gather-${resource_type}-button`);
+for (const resourceType of resourceTypes) {
+  ResourceAmounts[resourceType] = 0;
+  GatherRates[resourceType] = 1;
+  ResourceCounters[resourceType] = 
+    document.getElementById(`${resourceType}-counter`);
+  ResourceButtons[resourceType] = 
+    document.getElementById(`gather-${resourceType}-button`);
 
   /* Add ability to gather resources by clicking */ 
-  ResourceButtons[resource_type].addEventListener(
+  ResourceButtons[resourceType].addEventListener(
     "click",
-    () => tryGather(resource_type)
+    () => tryGather(resourceType)
   );
 
   /* Add ability to gather by holding down click or touch by setting an interval
     to tryGather on holding, then clearing the interval when releasing. */
   addListeners(
-    ResourceButtons[resource_type],
+    ResourceButtons[resourceType],
     ["mousedown","touchstart"],
     () => {
-      if (!(gather_interval)) {
-        gather_interval = setInterval(() => tryGather(resource_type), 50);
+      if (!(gatherInterval)) {
+        gatherInterval = setInterval(() => tryGather(resourceType), 50);
       };
     },
   );
   addListeners(
-    ResourceButtons[resource_type],
+    ResourceButtons[resourceType],
     ["mouseup","mouseleave","touchend","touchcancel","contextmenu",],
     () => {
-      clearInterval(gather_interval);
-      gather_interval = null;
+      clearInterval(gatherInterval);
+      gatherInterval = null;
     },
   );  
 };
 
-// Clear any gather_interval running if the window loses focus or any other
-// scenario that makes sense.  A sort of catch-all to clean up gather_interval.
+// Clear any gatherInterval running if the window loses focus or any other
+// scenario that makes sense.  A sort of catch-all to clean up gatherInterval.
 addListeners(
   window,
   ["mouseup","mouseleave","touchend","touchcancel","contextmenu","blur"],
   () => {
-    clearInterval(gather_interval);
-    gather_interval = null;
+    clearInterval(gatherInterval);
+    gatherInterval = null;
   },
 );
 
