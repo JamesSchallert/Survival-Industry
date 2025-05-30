@@ -26,7 +26,6 @@ function tryGather(resource_type) {
 };
 
 const GatherRateLimit = 90; // milliseconds between allowed gathers
-const GatherCooldowns = {};
 let gather_interval = null;
 let canGather = true;
 
