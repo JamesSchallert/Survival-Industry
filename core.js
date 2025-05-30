@@ -63,7 +63,7 @@ for (const resource_type of resource_types) {
     ["mousedown","touchstart"],
     () => {
       if (!(gather_interval)) {
-        gather_interval = setInterval(tryGather, 50);
+        gather_interval = setInterval(() => tryGather(resource_type), 50);
       };
     },
   );
